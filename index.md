@@ -1,9 +1,12 @@
 ---
 layout: page
-title: Hello World!
-tagline: Supporting tagline
+title: CS Solution Page
+tagline: Video Cloud Solution for Everybody
 ---
 {% include JB/setup %}
+
+
+
 
 Read [Jekyll Quick Start](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)
 

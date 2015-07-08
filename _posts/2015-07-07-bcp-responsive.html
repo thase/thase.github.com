@@ -1,0 +1,194 @@
+---
+layout: post
+category : lessons
+title: Responsive Player
+description: This is a responsive player. This is a responsive player. This is a responsive player. This is a responsive player. This is a responsive player. This is a responsive player. This is a responsive player. This is a responsive player. This is a responsive player.
+tagline: "Supporting tagline"
+tags : [intro, beginner, jekyll, tutorial]
+author:
+  name: James Miki
+jscode: https://gist.github.com/anonymous/84e0ce5d3ee4a9b9dc6a.js
+---
+{% include JB/setup %}
+   <!-- ---------------------------------------------------------------------------------------------------- -->
+    <!-- Player CSS -->
+    <!-- ---------------------------------------------------------------------------------------------------- -->
+    <style>
+      #outer {
+        width: 640px;
+        height: 360px;
+      }
+      .video-js {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      body.vjs-full-window {
+          padding: 0;
+          margin: 0;
+          height: 100%;
+        }
+        .video-js.vjs-fullscreen {
+          position: fixed;
+          overflow: hidden;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 100% !important;
+          height: 100% !important;
+        }
+        .video-js:-webkit-full-screen {
+          width: 100% !important;
+          height: 100% !important;
+        }
+        .video-js.vjs-fullscreen.vjs-user-inactive {
+          cursor: none;
+        }
+    </style>
+    <!-- ---------------------------------------------------------------------------------------------------- -->
+
+<!-- ---------------------------------------------------------------------------------------------------- -->
+<div id="outer">
+ <video id="brightcovePlayer"
+  data-account="3981276734001"
+  data-player="39be8b12-9e40-4142-b630-f6d4b42e179d"
+  data-embed="default"
+  data-video-id="4052473139001"
+  class="video-js" controls></video>
+  <script src="//players.brightcove.net/3981276734001/39be8b12-9e40-4142-b630-f6d4b42e179d_default/index.min.js"></script>
+
+  <p id="videoName"></p>
+  <p id="timeRemaining"></p>
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------------- -->
+
+    <br />
+
+    <!-- ---------------------------------------------------------------------------------------------------- -->
+    <!-- Player Event Handlers (DO NOT TOUCH) -->
+    <!-- ---------------------------------------------------------------------------------------------------- -->
+    <script src="//solutions.brightcove.com/bcls/scripts/secondsToTime.js"></script>
+
+    <script type="text/javascript">
+      var eVideoName = document.getElementById("videoName");
+      var eTimeRemaining = document.getElementById("timeRemaining");
+      var timeRemaining;
+      var totalTime;
+
+      function showPlayerTechName(player) {
+        if(player.techName == "Hls") {
+          log("Player: FLASH PLAYER");
+        } else if(this.techName == "Html5") {
+          log("Player: HTML5 PLAYER");
+        } else {
+          console.log("Loaded...");
+        }
+      }
+
+      function registerEventHandler(player) {
+        player.on("ended", function() {
+          log('Event: ended');
+        });
+
+        player.on("timeupdate", function(evt) {
+          timeRemaining = Math.round(player.duration() - player.currentTime());
+          totalTime = BCLSsecondsToTime(timeRemaining);
+          eTimeRemaining.innerHTML = "Time remaining = " + totalTime.m + ':' + totalTime.s;
+        });
+
+        player.on('ima3-ad-error', function(event) {
+          log('EVENT: IMA3 Ad ERROR: ' + event);
+        });
+
+        player.on('adstart', function(event) {
+            log("CURRENT Ad Server URL:" + player.ima3.settings.serverUrl);
+            log('EVENT: adStart');
+        });
+
+        player.on('adend', function(event) {
+            log('EVENT: adend');
+        });
+
+        player.on('durationchange', function(e){
+          log('durationchange: ', e);
+        });
+
+        player.on('ended', function(e){
+          log('ended: ', e);
+        });
+
+        player.on('error', function(e){
+          log('error: ', e);
+        });
+
+        player.on('firstplay', function(e){
+          log('firstplay: ', e);
+        });
+
+        player.on('fullscreenchange', function(e){
+          log('fullscreenchange: ', e);
+        });
+
+        player.on('loadedalldata', function(e){
+          log('loadedalldata: ', e);
+        });
+
+        player.on('loadeddata', function(e){
+          log('loadeddata: ', e);
+        });
+
+        player.on('loadedmetadata', function(e){
+          log('loadedmetadata: ', e);
+          log("MeidaInfo", player.mediainfo);
+        });
+
+        player.on('loadstart', function(e){
+          log('loadstart: ', e);
+        });
+
+        player.on('pause', function(e){
+          log('pause: ', e);
+        });
+
+        player.on('play', function(e){
+          log('play: ', e);
+        });
+
+        player.on('progress', function(e){
+          log('progress: ', e);
+        });
+
+        player.on('resize', function(e){
+          log('resize: ', e);
+        });
+
+        player.on('seeked', function(e){
+          log('seeked: ', e);
+        });
+
+        player.on('seeking', function(e){
+          log('seeking: ', e);
+        });
+
+        player.on('volumechange', function(e){
+          log('volumechange: ', e);
+        });
+
+        player.on('waiting', function(e){
+          log('waiting: ', e);
+        });
+      }
+    </script>
+    <!-- ---------------------------------------------------------------------------------------------------- -->
+
+
+
+<!-- ---------------------------------------------------------------------------------------------------- -->
+<script type="text/JavaScript"> // Initialise player var thePlayer;
+// When the player's ready, let's get started videojs("brightcovePlayer").ready(function(){ thePlayer = this;
+newLog(); showPlayerTechName(thePlayer); registerEventHandler(thePlayer);
+// The code comes here
+//}); </script>
+<!-- ---------------------------------------------------------------------------------------------------- -->
